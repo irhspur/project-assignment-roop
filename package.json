@@ -4,6 +4,7 @@
   "description": "Project Assignment for Fuse Machines Job Application - Premier League Data Table",
   "main": "index.js",
   "scripts": {
+    "build": "webpack --mode production",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
