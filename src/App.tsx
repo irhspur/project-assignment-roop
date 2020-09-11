@@ -1,38 +1,39 @@
 import React, { useState, useEffect } from "react";
-
-type TClub = {
-    code: string;
-    country: string;
-    name: string;
-};
-
-type TData = {
-    name: string;
-    clubs: TClub[];
-};
+import { getClubs, getMatchDetails } from "./services/footballApi";
+import { TData, TMatchDetails } from "./utils";
+import { getTeams } from "./utils/dataUtils";
 
 const App = () => {
     const [data, setData] = useState<TData>();
+    const [matches, setMatches] = useState<TMatchDetails>();
+
     useEffect(() => {
         (async () => {
-            const response = await fetch(
-                "https://raw.githubusercontent.com/openfootball/football.json/master/2015-16/en.1.clubs.json"
-            );
-            const dataResponse = await response.json();
+            const dataResponse = await getClubs("2015-16");
             setData(dataResponse);
+            const dataMatches = await getMatchDetails("2015-16");
+            setMatches(dataMatches);
         })();
     }, []);
 
-    return (
-        <div>
-            <h1>{data?.name}</h1>
-            {data?.clubs.map((club) => (
-                <li key={club.code}>
-                    {club.name} - {club.country}
-                </li>
-            ))}
-        </div>
-    );
+    if (!matches) return <div>Loading...</div>;
+    else {
+        return (
+            <div>
+                <h1>{matches?.name}</h1>
+                <h2>Teams</h2>
+                {getTeams(matches.rounds).map((team, idx) => (
+                    <li key={idx}>{team}</li>
+                ))}
+                <h1>{data?.name}</h1>
+                {data?.clubs.map((club) => (
+                    <li key={club.code}>
+                        {club.name} - {club.country}
+                    </li>
+                ))}
+            </div>
+        );
+    }
 };
 
 export default App;
