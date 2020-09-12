@@ -3,6 +3,7 @@ import { getClubs, getMatchDetails } from "./services/footballApi";
 import { TData, TTeamData } from "./utils";
 import { getTeams } from "./utils/dataUtils";
 import { FixtureTable } from "./components/FixtureTable";
+import "./App.scss";
 
 const App = () => {
     const [clubs, setClubs] = useState<TData>();
