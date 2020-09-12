@@ -23,6 +23,16 @@ export type TRound = {
 
 export type TMatchDetails = {
     name: string;
-    rounds: TRound[];
 };
 
+export type TTeamData = {
+    name: string;
+    matchesPlayed?: number;
+    win?: number;
+    loss?: number;
+    draw?: number;
+    goalsFor?: number;
+    goalsAgainst?: number;
+    goalsDifference?: number;
+    points?: number;
+}
