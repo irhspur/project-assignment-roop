@@ -2,7 +2,7 @@ import api from './api'
 
 export const getClubs = async (year: string) => {
     try {
-        const response = await api.get(`/${year}/en.1.clubs.json`)
+        const response = await api.get('/clubs')
         return response.data;
     }
     catch (err) {
@@ -12,7 +12,7 @@ export const getClubs = async (year: string) => {
 
 export const getMatchDetails = async (year: string) => {
     try {
-        const response = await api.get(`/${year}/en.1.json`)
+        const response = await api.get('/match-details')
         return response.data;
     }
     catch (err) {
