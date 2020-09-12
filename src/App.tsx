@@ -27,8 +27,10 @@ const App = () => {
     // else {
     return (
         <div>
-            <h1>{clubs?.name}</h1>
-            <FixtureTable data={matches} />
+            <section className="section">
+                <h2 className="title">{clubs?.name}</h2>
+                <FixtureTable data={matches} />
+            </section>
             <h2>Clubs</h2>
             {/* {getTeams(matches.rounds).map((team, idx) => (
                     <li key={idx}>{team}</li>
@@ -38,6 +40,14 @@ const App = () => {
                     {club.name} - {club.country}
                 </li>
             ))}
+            <footer className="footer">
+                <div className="content has-text-centered">
+                    <p>
+                        <strong>Football Json Data Table</strong> by{" "}
+                        <a href="#">Roop Bajracharya</a>.
+                    </p>
+                </div>
+            </footer>
         </div>
     );
     // }

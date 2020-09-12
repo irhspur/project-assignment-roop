@@ -35,4 +35,5 @@ export type TTeamData = {
     goalsAgainst?: number;
     goalsDifference?: number;
     points?: number;
+    class?: string;
 }
