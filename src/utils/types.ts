@@ -25,6 +25,11 @@ export type TMatchDetails = {
     name: string;
 };
 
+export type TLast5 = {
+    date: string,
+    status: 'W' | 'L' | 'D'
+}
+
 export type TTeamData = {
     name: string;
     matchesPlayed?: number;
@@ -36,5 +41,5 @@ export type TTeamData = {
     goalsDifference?: number;
     points?: number;
     class?: string;
-    last5?: string;
+    last5?: TLast5[];
 }

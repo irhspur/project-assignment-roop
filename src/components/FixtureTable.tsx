@@ -86,11 +86,21 @@ export const FixtureTable = ({
         } else if (field === "last5") {
             return (
                 <td>
-                    <span className="tag is-success">W</span>
-                    <span className="tag is-success">W</span>
-                    <span className="tag is-light">D</span>
-                    <span className="tag is-danger">L</span>
-                    <span className="tag is-success">W</span>
+                    {team[field]?.map((match) => (
+                        <span
+                            key={match.date}
+                            title={match.date}
+                            className={`tag ${
+                                match.status === "W"
+                                    ? "is-success"
+                                    : match.status === "L"
+                                    ? "is-danger"
+                                    : "is-light"
+                            }`}
+                        >
+                            {match.status}
+                        </span>
+                    ))}
                 </td>
             );
         } else {
