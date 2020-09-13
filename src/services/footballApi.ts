@@ -6,7 +6,11 @@ export const getClubs = async (year: string) => {
         return response.data;
     }
     catch (err) {
-        throw new Error("Network Error");
+        const error = new Error(err)
+        if (error.message.match(new RegExp('404'))) {
+            throw new Error("Network Error");
+        }
+        else return []
     }
 }
 
@@ -16,6 +20,10 @@ export const getMatchDetails = async (year: string) => {
         return response.data;
     }
     catch (err) {
-        throw new Error("Network Error");
+        const error = new Error(err)
+        if (error.message.match(new RegExp('404'))) {
+            throw new Error("Network Error");
+        }
+        else return []
     }
 }

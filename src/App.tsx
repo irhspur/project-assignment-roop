@@ -22,6 +22,7 @@ const App = () => {
     useEffect(() => {
         (async () => {
             setLoading(true);
+            setError(null);
             try {
                 const clubsResponse = await getClubs(season);
                 setClubs(clubsResponse);
