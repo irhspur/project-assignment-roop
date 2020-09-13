@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { getClubs, getMatchDetails } from "./services/footballApi";
 import { TData, TTeamData } from "./utils";
-import { getTeams } from "./utils/dataUtils";
 import { FixtureTable } from "./components/FixtureTable";
 import "./App.scss";
 import { ClubModal } from "./components/ClubModal";
-import { seasons } from "./utils/optionUtils";
 import { Spinner } from "./components/Spinner";
-import { match } from "assert";
 import { ClubSearchBox } from "./components/ClubSearchBox";
+import { SeasonSelect } from "./components/SeasonSelect";
+import { initialSeason } from "./utils/optionUtils";
 
 const App = () => {
     const [clubs, setClubs] = useState<TData>();
@@ -17,7 +16,7 @@ const App = () => {
     const [openModal, setModalOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     const [modalData, setModalData] = useState({});
-    const [season, setSeason] = useState("2015-16");
+    const [season, setSeason] = useState(initialSeason);
     const [searchString, setSearchString] = useState("");
 
     useEffect(() => {
@@ -29,7 +28,7 @@ const App = () => {
                 const dataMatches = await getMatchDetails(season);
                 setMatches(Object.values(dataMatches));
             } catch (err) {
-                setError("Something Went Wrong");
+                setError(err.message);
             }
             setLoading(false);
         })();
@@ -47,39 +46,20 @@ const App = () => {
         setModalOpen(true);
     };
 
-    // if (error) return <div>{error}</div>;
     // else {
     return (
         <div>
-            <div className="container">
+            <div className="container main-container">
                 <section className="section">
                     <h3 className="title is-3 is-centered">
                         Premier League Fixtures
                     </h3>
                     <div className="level">
                         <div className="level-left">
-                            <div className="field">
-                                <label className="label">Seasons</label>
-                                <div className="control">
-                                    <div
-                                        className={`select ${
-                                            loading ? "is-loading" : ""
-                                        }`}
-                                    >
-                                        <select
-                                            onChange={(e) =>
-                                                setSeason(e.target.value)
-                                            }
-                                        >
-                                            {seasons.map((option: string) => (
-                                                <option key={option}>
-                                                    {option}
-                                                </option>
-                                            ))}
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
+                            <SeasonSelect
+                                loading={loading}
+                                setSeason={setSeason}
+                            />
                         </div>
                         <div className="level-right">
                             <ClubSearchBox
@@ -90,6 +70,10 @@ const App = () => {
                     </div>
                     {loading ? (
                         <Spinner isActive={loading} />
+                    ) : error ? (
+                        <div className="message is-danger">
+                            <div className="message-body">{error}</div>
+                        </div>
                     ) : matches.length < 1 ? (
                         <div className="box">
                             No Matches Found for this Season

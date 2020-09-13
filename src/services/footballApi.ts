@@ -6,7 +6,7 @@ export const getClubs = async (year: string) => {
         return response.data;
     }
     catch (err) {
-        return []
+        throw new Error("Network Error");
     }
 }
 
@@ -16,6 +16,6 @@ export const getMatchDetails = async (year: string) => {
         return response.data;
     }
     catch (err) {
-        return []
+        throw new Error("Network Error");
     }
 }
