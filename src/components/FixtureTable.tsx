@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { TTeamData } from "../utils";
+import { sortByPoints, mapPointClass } from "../utils/dataUtils";
 
 const TeamDataFields: { field: keyof TTeamData; label: string }[] = [
     { field: "name", label: "Club" },
@@ -23,28 +24,38 @@ export const FixtureTable = ({
 }) => {
     const [viewData, setViewData] = useState(data);
     const [sortOrder, setSortOrder] = useState(1);
+    const [searchString, setSearchString] = useState("");
 
     useEffect(() => {
-        const formatted = data
-            .sort((a, b) => ((a.points || 0) > (b.points || 0) ? -1 : 1))
-            .map((team, idx) => ({
-                ...team,
-                class:
-                    idx < 4
-                        ? "is-positive"
-                        : idx > data.length - 4
-                        ? "is-negative"
-                        : "",
-            }));
+        const formatted = data.sort(sortByPoints(1)).map((team, idx) => ({
+            ...team,
+            class:
+                idx < 4
+                    ? "is-positive"
+                    : idx > data.length - 4
+                    ? "is-negative"
+                    : "",
+        }));
         setViewData(formatted);
     }, [data]);
 
     useEffect(() => {
-        const sorted = viewData.sort((a, b) =>
-            (a.points || 0) > (b.points || 0) ? -sortOrder : sortOrder
-        );
+        const sorted = viewData.sort(sortByPoints(sortOrder));
         setViewData(sorted);
     }, [sortOrder]);
+
+    useEffect(() => {
+        if (searchString) {
+            const regex = new RegExp(searchString, "gi");
+            const filtered = data.filter((team) => regex.test(team.name));
+            setViewData(filtered);
+        } else {
+            const revertedData = data
+                .sort(sortByPoints(1))
+                .map(mapPointClass(data.length));
+            setViewData(revertedData);
+        }
+    }, [searchString]);
 
     const renderSortableHeader = (label: string) => (
         <th
@@ -87,33 +98,50 @@ export const FixtureTable = ({
     };
 
     return (
-        <table className="table">
-            <thead>
-                <tr>
-                    {TeamDataFields.map(({ label, field }) => (
-                        <React.Fragment key={label}>
-                            {field === "points" ? (
-                                renderSortableHeader(label)
-                            ) : (
-                                <th>{label}</th>
-                            )}
-                        </React.Fragment>
-                    ))}
-                </tr>
-            </thead>
-            <tbody>
-                {viewData.length > 0
-                    ? viewData.map((team) => (
-                          <tr key={team.name} className={team.class}>
-                              {TeamDataFields.map(({ field }) => (
-                                  <React.Fragment key={field}>
-                                      {renderTableData(team, field)}
-                                  </React.Fragment>
-                              ))}
-                          </tr>
-                      ))
-                    : null}
-            </tbody>
-        </table>
+        <div>
+            <div className="field">
+                <p className="control has-icons-right">
+                    <input
+                        className="input"
+                        placeholder="Enter Clubname"
+                        type="text"
+                        name="searchString"
+                        value={searchString}
+                        onChange={(e) => setSearchString(e.target.value)}
+                    />
+                    <span className="icon is-small is-right">
+                        <i className="fas fa-search" />
+                    </span>
+                </p>
+            </div>
+            <table className="table is-fullwidth">
+                <thead>
+                    <tr>
+                        {TeamDataFields.map(({ label, field }) => (
+                            <React.Fragment key={label}>
+                                {field === "points" ? (
+                                    renderSortableHeader(label)
+                                ) : (
+                                    <th>{label}</th>
+                                )}
+                            </React.Fragment>
+                        ))}
+                    </tr>
+                </thead>
+                <tbody>
+                    {viewData.length > 0
+                        ? viewData.map((team) => (
+                              <tr key={team.name} className={team.class}>
+                                  {TeamDataFields.map(({ field }) => (
+                                      <React.Fragment key={field}>
+                                          {renderTableData(team, field)}
+                                      </React.Fragment>
+                                  ))}
+                              </tr>
+                          ))
+                        : null}
+                </tbody>
+            </table>
+        </div>
     );
 };

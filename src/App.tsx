@@ -42,18 +42,20 @@ const App = () => {
     // else {
     return (
         <div>
-            <section className="section">
-                <h2 className="title">{clubs?.name}</h2>
-                <FixtureTable
-                    data={matches}
-                    handleModalOpen={handleModalOpen}
+            <div className="container">
+                <section className="section">
+                    <h2 className="title">{clubs?.name}</h2>
+                    <FixtureTable
+                        data={matches}
+                        handleModalOpen={handleModalOpen}
+                    />
+                </section>
+                <ClubModal
+                    isActive={openModal}
+                    clubInfo={modalData}
+                    onClose={() => setModalOpen(false)}
                 />
-            </section>
-            <ClubModal
-                isActive={openModal}
-                clubInfo={modalData}
-                onClose={() => setModalOpen(false)}
-            />
+            </div>
             <footer className="footer">
                 <div className="content has-text-centered">
                     <p>
