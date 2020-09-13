@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { TTeamData } from "../utils";
-import { sortByPoints, mapPointClass } from "../utils/dataUtils";
+import {
+    sortByPoints,
+    mapPointClass,
+    getStatusClass,
+} from "../utils/dataUtils";
 
 const TeamDataFields: { field: keyof TTeamData; label: string }[] = [
     { field: "name", label: "Club" },
@@ -21,7 +25,7 @@ export const FixtureTable = ({
     handleModalOpen,
 }: {
     data: TTeamData[];
-    handleModalOpen: (clubName: string) => void;
+    handleModalOpen: (clubName: TTeamData) => void;
     searchString?: string;
 }) => {
     const [viewData, setViewData] = useState(data);
@@ -62,7 +66,6 @@ export const FixtureTable = ({
         <th
             key={label}
             className="is-sortable"
-            // tslint:disable-next-line: jsx-no-lambda
             onClick={() => setSortOrder((prevSort) => -1 * prevSort)}
         >
             {label}
@@ -79,9 +82,26 @@ export const FixtureTable = ({
     const renderTableData = (team: TTeamData, field: keyof TTeamData) => {
         if (field === "name") {
             return (
-                <td onClick={() => handleModalOpen(team[field])} key={field}>
-                    {team[field]}
-                </td>
+                <a>
+                    <td
+                        className="media"
+                        onClick={() => handleModalOpen(team)}
+                        key={field}
+                    >
+                        <figure className="media-left">
+                            <p className="image is-32x32">
+                                <img
+                                    src={team.clubLogo}
+                                    alt={team.name}
+                                    width={20}
+                                />
+                            </p>
+                        </figure>
+                        <div className="media-content">
+                            <strong>{team[field]}</strong>
+                        </div>
+                    </td>
+                </a>
             );
         } else if (field === "last5") {
             return (
@@ -90,13 +110,7 @@ export const FixtureTable = ({
                         <span
                             key={match.date}
                             title={match.date}
-                            className={`tag ${
-                                match.status === "W"
-                                    ? "is-success"
-                                    : match.status === "L"
-                                    ? "is-danger"
-                                    : "is-light"
-                            }`}
+                            className={`tag ${getStatusClass(match.status)}`}
                         >
                             {match.status}
                         </span>
