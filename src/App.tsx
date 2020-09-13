@@ -4,11 +4,14 @@ import { TData, TTeamData } from "./utils";
 import { getTeams } from "./utils/dataUtils";
 import { FixtureTable } from "./components/FixtureTable";
 import "./App.scss";
+import { ClubModal } from "./components/ClubModal";
 
 const App = () => {
     const [clubs, setClubs] = useState<TData>();
     const [error, setError] = useState<string | null>(null);
     const [matches, setMatches] = useState<TTeamData[]>([]);
+    const [openModal, setModalOpen] = useState(false);
+    const [modalData, setModalData] = useState({});
 
     useEffect(() => {
         (async () => {
@@ -23,23 +26,34 @@ const App = () => {
         })();
     }, []);
 
+    const handleModalOpen = (clubName: string) => {
+        const selectedClub = clubs?.clubs.find(
+            (club) => club.name === clubName
+        );
+
+        if (selectedClub) {
+            setModalData(selectedClub);
+        }
+
+        setModalOpen(true);
+    };
+
     // if (error) return <div>{error}</div>;
     // else {
     return (
         <div>
             <section className="section">
                 <h2 className="title">{clubs?.name}</h2>
-                <FixtureTable data={matches} />
+                <FixtureTable
+                    data={matches}
+                    handleModalOpen={handleModalOpen}
+                />
             </section>
-            <h2>Clubs</h2>
-            {/* {getTeams(matches.rounds).map((team, idx) => (
-                    <li key={idx}>{team}</li>
-                ))} */}
-            {clubs?.clubs.map((club) => (
-                <li key={club.code}>
-                    {club.name} - {club.country}
-                </li>
-            ))}
+            <ClubModal
+                isActive={openModal}
+                clubInfo={modalData}
+                onClose={() => setModalOpen(false)}
+            />
             <footer className="footer">
                 <div className="content has-text-centered">
                     <p>

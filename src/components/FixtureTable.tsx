@@ -13,7 +13,13 @@ const TeamDataFields: { field: keyof TTeamData; label: string }[] = [
     { field: "points", label: "Points" },
 ];
 
-export const FixtureTable = ({ data }: { data: TTeamData[] }) => {
+export const FixtureTable = ({
+    data,
+    handleModalOpen,
+}: {
+    data: TTeamData[];
+    handleModalOpen: (clubName: string) => void;
+}) => {
     const [viewData, setViewData] = useState(data);
     const [sortOrder, setSortOrder] = useState(1);
 
@@ -39,6 +45,24 @@ export const FixtureTable = ({ data }: { data: TTeamData[] }) => {
         setViewData(sorted);
     }, [sortOrder]);
 
+    const renderSortableHeader = (label: string) => (
+        <th
+            key={label}
+            className="is-sortable"
+            // tslint:disable-next-line: jsx-no-lambda
+            onClick={() => setSortOrder((prevSort) => -1 * prevSort)}
+        >
+            {label}
+            <span
+                className={`icon has-info-success ${
+                    sortOrder > 0 ? "is-rotated" : ""
+                }`}
+            >
+                <i className="fas fa-chevron-up" />
+            </span>
+        </th>
+    );
+
     return (
         <table className="table">
             <thead>
@@ -46,21 +70,7 @@ export const FixtureTable = ({ data }: { data: TTeamData[] }) => {
                     {TeamDataFields.map(({ label, field }) => (
                         <>
                             {field === "points" ? (
-                                <th
-                                    key={label}
-                                    className="is-sortable"
-                                    // tslint:disable-next-line: jsx-no-lambda
-                                    onClick={() =>
-                                        setSortOrder(
-                                            (prevSort) => -1 * prevSort
-                                        )
-                                    }
-                                >
-                                    {label}
-                                    <span className="icon has-text-success">
-                                        <i className="fas fa-check-square" />
-                                    </span>
-                                </th>
+                                renderSortableHeader(label)
                             ) : (
                                 <th key={label}>{label}</th>
                             )}
@@ -73,7 +83,20 @@ export const FixtureTable = ({ data }: { data: TTeamData[] }) => {
                     ? viewData.map((team) => (
                           <tr key={team.name} className={team.class}>
                               {TeamDataFields.map(({ field }) => (
-                                  <td key={field}>{team[field]}</td>
+                                  <>
+                                      {field === "name" ? (
+                                          <td
+                                              onClick={() =>
+                                                  handleModalOpen(team[field])
+                                              }
+                                              key={field}
+                                          >
+                                              {team[field]}
+                                          </td>
+                                      ) : (
+                                          <td key={field}>{team[field]}</td>
+                                      )}
+                                  </>
                               ))}
                           </tr>
                       ))
