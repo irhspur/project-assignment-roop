@@ -1,4 +1,4 @@
-import { TRound, TTeamData } from "./types";
+import { TRound, TTeamData, TStatus } from "./types";
 
 export const getTeams = (rounds: TRound[]) => {
     const teams = new Set<string>();
@@ -8,6 +8,12 @@ export const getTeams = (rounds: TRound[]) => {
     }))
     return Array.from(teams);
 }
+
+export const getStatusClass = (status: TStatus) => status === "W"
+    ? "is-success"
+    : status === "L"
+        ? "is-danger"
+        : "is-light"
 
 export const sortByPoints = (sortOrder: number) => (a: TTeamData, b: TTeamData) => (a.points || 0) > (b.points || 0) ? -sortOrder : sortOrder
 

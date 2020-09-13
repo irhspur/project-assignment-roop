@@ -25,9 +25,11 @@ export type TMatchDetails = {
     name: string;
 };
 
+export type TStatus = 'W' | 'L' | 'D';
+
 export type TLast5 = {
-    date: string,
-    status: 'W' | 'L' | 'D'
+    date: string;
+    status: TStatus;
 }
 
 export type TTeamData = {
@@ -42,4 +44,5 @@ export type TTeamData = {
     points?: number;
     class?: string;
     last5?: TLast5[];
+    clubLogo?: string;
 }
