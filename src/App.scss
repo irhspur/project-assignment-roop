@@ -69,6 +69,7 @@ td {
     span {
         &.tag {
             margin-left: 0.5em;
+            width: 2em;
         }
     }
 }
@@ -86,6 +87,10 @@ td {
         height: 80px;
         width: 80px;
     }
+}
+
+.main-container {
+    min-height: 800px;
 }
 
 @import "../node_modules/bulma/bulma.sass";
