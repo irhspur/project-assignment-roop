@@ -17,14 +17,15 @@ const TeamDataFields: { field: keyof TTeamData; label: string }[] = [
 
 export const FixtureTable = ({
     data,
+    searchString,
     handleModalOpen,
 }: {
     data: TTeamData[];
     handleModalOpen: (clubName: string) => void;
+    searchString?: string;
 }) => {
     const [viewData, setViewData] = useState(data);
     const [sortOrder, setSortOrder] = useState(1);
-    const [searchString, setSearchString] = useState("");
 
     useEffect(() => {
         const formatted = data.sort(sortByPoints(1)).map((team, idx) => ({
@@ -99,21 +100,6 @@ export const FixtureTable = ({
 
     return (
         <div>
-            <div className="field">
-                <p className="control has-icons-right">
-                    <input
-                        className="input"
-                        placeholder="Enter Clubname"
-                        type="text"
-                        name="searchString"
-                        value={searchString}
-                        onChange={(e) => setSearchString(e.target.value)}
-                    />
-                    <span className="icon is-small is-right">
-                        <i className="fas fa-search" />
-                    </span>
-                </p>
-            </div>
             <table className="table is-fullwidth">
                 <thead>
                     <tr>
