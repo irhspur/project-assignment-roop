@@ -9,6 +9,10 @@ Implemented as a project assignment for Job Application
 3. Language: JavaScript, TypeScript
 4. Library: React
 
+### Serverless Demo
+
+[Demo](https://flamboyant-hopper-cb252d.netlify.app/)
+
 ### API:
 
 [Football Json](https://github.com/openfootball/football.json)

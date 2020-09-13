@@ -82,12 +82,8 @@ export const FixtureTable = ({
     const renderTableData = (team: TTeamData, field: keyof TTeamData) => {
         if (field === "name") {
             return (
-                <a>
-                    <td
-                        className="media"
-                        onClick={() => handleModalOpen(team)}
-                        key={field}
-                    >
+                <td onClick={() => handleModalOpen(team)} key={field}>
+                    <a className="media">
                         <figure className="media-left">
                             <p className="image is-32x32">
                                 <img
@@ -101,8 +97,8 @@ export const FixtureTable = ({
                         <div className="media-content">
                             <strong>{team[field]}</strong>
                         </div>
-                    </td>
-                </a>
+                    </a>
+                </td>
             );
         } else if (field === "last5") {
             return (
