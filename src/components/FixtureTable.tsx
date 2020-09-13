@@ -94,6 +94,7 @@ export const FixtureTable = ({
                                     src={team.clubLogo}
                                     alt={team.name}
                                     width={20}
+                                    style={{ maxHeight: 30 }}
                                 />
                             </p>
                         </figure>
