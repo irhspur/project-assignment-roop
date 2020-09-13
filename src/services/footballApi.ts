@@ -4,7 +4,7 @@ import { formatTeamwiseMatches } from '../utils/dataUtils';
 export const getClubs = async (year: string) => {
     try {
         // const response = await api.get(`/clubs/${year}`)
-        const response = await api.get(`/${year}/en.1.json`)
+        const response = await api.get(`/${year}/en.1.clubs.json`)
         return response.data;
     }
     catch (err) {

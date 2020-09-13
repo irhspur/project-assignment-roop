@@ -1,4 +1,5 @@
 import { TRound, TTeamData, TStats, TLast5, TStatus } from "./types";
+import { teamImageMapping } from "./teamMappings";
 
 export const getTeams = (rounds: TRound[]) => {
     const teams = new Set<string>();
@@ -78,10 +79,10 @@ const combineTeamStat = (existingData: TTeamData, teamStats: TStats, teamName: s
         if (key === 'last5') {
             //@ts-ignore
             if (existingData.last5.length < 5) {
-            //@ts-ignore
+                //@ts-ignore
                 return teamStats.last5.concat(existingData.last5)
             } else {
-            //@ts-ignore
+                //@ts-ignore
                 const sorted = existingData.last5.concat(teamStats.last5).sort((a, b) => a.date > b.date ? -1 : 1)
                 return sorted.slice(0, 5)
             }
@@ -92,10 +93,10 @@ const combineTeamStat = (existingData: TTeamData, teamStats: TStats, teamName: s
     }
 
     if (existingData) {
-            //@ts-ignore
-        return ({ name: teamName, ...statRows.reduce((acc, key: keyof TStats) => ({ ...acc, [key]: calculateValue(key) }), {}), matchesPlayed: existingData.matchesPlayed + 1 })
+        //@ts-ignore
+        return ({ ...existingData, ...statRows.reduce((acc, key: keyof TStats) => ({ ...acc, [key]: calculateValue(key) }), {}), matchesPlayed: existingData.matchesPlayed + 1 })
     } else {
-            //@ts-ignore
-        return ({ name: teamName, ...statRows.reduce((acc, key: keyof TStats) => ({ ...acc, [key]: teamStats[key] || 0 }), {}), matchesPlayed: 1 })
+        //@ts-ignore
+        return ({ name: teamName, ...statRows.reduce((acc, key: keyof TStats) => ({ ...acc, [key]: teamStats[key] || 0 }), {}), matchesPlayed: 1, clubLogo: teamImageMapping[teamName] || teamImageMapping.default })
     }
 }
