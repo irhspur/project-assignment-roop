@@ -11,9 +11,9 @@ $beige-light: #d0d1cd;
 $beige-lighter: #eff0eb;
 
 $table-row-positive-text-color: hsl(0, 0%, 0%);
-$table-row-positive-background-color: rgba(0, 209, 175, 0.4);
+$table-row-positive-background-color: rgba(0, 209, 175, 0.3);
 $table-row-negative-text-color: hsl(0, 0%, 0%);
-$table-row-negative-background-color: rgba(241, 70, 104, 0.4);
+$table-row-negative-background-color: rgba(241, 70, 104, 0.3);
 // Update Bulma's global variables
 $family-sans-serif: "Nunito", sans-serif;
 $grey-dark: $brown;
@@ -35,7 +35,7 @@ table tr {
         color: $table-row-positive-text-color;
         td,
         th {
-            border-color: $table-row-positive-text-color;
+            // border-color: $table-row-positive-text-color;
             color: currentColor;
         }
     }
@@ -44,7 +44,7 @@ table tr {
         color: $table-row-negative-text-color;
         td,
         th {
-            border-color: $table-row-negative-text-color;
+            // border-color: $table-row-negative-text-color;
             color: currentColor;
         }
     }
@@ -73,5 +73,19 @@ td {
     }
 }
 
-// Import only what you need from Bulma
+.loader-wrapper {
+    height: 100%;
+    width: 100%;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3em;
+
+    .loader {
+        height: 80px;
+        width: 80px;
+    }
+}
+
 @import "../node_modules/bulma/bulma.sass";
