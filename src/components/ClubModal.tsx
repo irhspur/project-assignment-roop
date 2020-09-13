@@ -1,10 +1,11 @@
 import React from "react";
-import { TClub } from "../utils";
+import { TClub, TTeamData } from "../utils";
+import { ModalTable } from "./ModalTable";
 
 type TModalProps = {
     isActive: boolean;
     onClose: () => void;
-    clubInfo: TClub | {};
+    clubInfo: (TClub & TTeamData) | {};
 };
 
 export const ClubModal = ({ isActive, onClose, clubInfo }: TModalProps) => {
@@ -22,10 +23,32 @@ export const ClubModal = ({ isActive, onClose, clubInfo }: TModalProps) => {
                 </header>
                 <section className="modal-card-body">
                     {"name" in clubInfo ? (
-                        <div>
-                            <strong>{clubInfo.name}</strong>
-                            <div>
-                                <strong>Country</strong>: {clubInfo.country}
+                        <div className="level">
+                            <div className="level-left">
+                                <article className="media">
+                                    <figure className="media-left">
+                                        <p className="image is-64x64">
+                                            <img
+                                                src={clubInfo.clubLogo}
+                                                alt={clubInfo.name}
+                                            />
+                                        </p>
+                                    </figure>
+                                    <div className="media-content">
+                                        <div className="content">
+                                            <p>
+                                                <strong>{clubInfo.name}</strong>
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <strong>Country</strong>:{" "}
+                                            {clubInfo.country}
+                                        </div>
+                                    </div>
+                                </article>
+                            </div>
+                            <div className="level-right">
+                                <ModalTable data={clubInfo.last5} />
                             </div>
                         </div>
                     ) : (

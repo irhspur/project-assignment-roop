@@ -35,13 +35,13 @@ const App = () => {
         })();
     }, [season]);
 
-    const handleModalOpen = (clubName: string) => {
+    const handleModalOpen = (team: TTeamData) => {
         const selectedClub = clubs?.clubs.find(
-            (club) => club.name === clubName
+            (club) => club.name === team.name
         );
 
         if (selectedClub) {
-            setModalData(selectedClub);
+            setModalData({ ...selectedClub, ...team });
         }
 
         setModalOpen(true);

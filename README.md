@@ -1,15 +1,25 @@
 # Premier League Fixtures Data Table
 
-### Implemented as a project assignment for Job Application
+Implemented as a project assignment for Job Application
 
 ## Libraries Used
 
-### UI: (bulma)[https://bulma.io/]
+1. UI: [ bulma ](https://bulma.io/)
+2. Tools: Webpack, Babel
+3. Language: JavaScript, TypeScript
+4. Library: React
 
-### Tools: Webpack, Babel
+### API:
 
-### Language: JavaScript, TypeScript
+[Football Json](https://github.com/openfootball/football.json)
 
-### Library: React
+### Running the app
 
-### API: (Football Json)[https://github.com/openfootball/football.json]
+1. Clone the [ backend ](https://github.com/irhspur/project-assignment-backend-roop)
+2. Go inside the backend folder
+3. Run `npm install`
+4. Run `npm run start`
+5. Go inside the frontend folder
+6. Run `npm install`
+7. Run `npm run start`
+8. Open `localhost:8080`

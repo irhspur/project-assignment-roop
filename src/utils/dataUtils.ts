@@ -1,4 +1,4 @@
-import { TRound, TTeamData, TStats, TLast5 } from "./types";
+import { TRound, TTeamData, TStats, TLast5, TStatus } from "./types";
 
 export const getTeams = (rounds: TRound[]) => {
     const teams = new Set<string>();
@@ -8,6 +8,12 @@ export const getTeams = (rounds: TRound[]) => {
     }))
     return Array.from(teams);
 }
+
+export const getStatusClass = (status: TStatus) => status === "W"
+    ? "is-success"
+    : status === "L"
+        ? "is-danger"
+        : "is-light"
 
 export const sortByPoints = (sortOrder: number) => (a: TTeamData, b: TTeamData) => (a.points || 0) > (b.points || 0) ? -sortOrder : sortOrder
 
@@ -80,6 +86,7 @@ const combineTeamStat = (existingData: TTeamData, teamStats: TStats, teamName: s
                 return sorted.slice(0, 5)
             }
         } else {
+            //@ts-ignore
             return (teamStats[key] || 0) + (existingData[key] || 0)
         }
     }
