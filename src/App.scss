@@ -10,10 +10,10 @@ $brown: #757763;
 $beige-light: #d0d1cd;
 $beige-lighter: #eff0eb;
 
-$table-row-positive-text-color: hsl(0, 0%, 100%);
-$table-row-positive-background-color: rgba(0, 209, 175, 0.9);
-$table-row-negative-text-color: hsl(0, 0%, 100%);
-$table-row-negative-background-color: rgba(241, 70, 104, 0.9);
+$table-row-positive-text-color: hsl(0, 0%, 0%);
+$table-row-positive-background-color: rgba(0, 209, 175, 0.4);
+$table-row-negative-text-color: hsl(0, 0%, 0%);
+$table-row-negative-background-color: rgba(241, 70, 104, 0.4);
 // Update Bulma's global variables
 $family-sans-serif: "Nunito", sans-serif;
 $grey-dark: $brown;
@@ -61,6 +61,14 @@ th {
             -moz-transition: all 0.5s ease-in-out;
             -o-transition: all 0.5s ease-in-out;
             transition: all 0.3s ease-in-out;
+        }
+    }
+}
+
+td {
+    span {
+        &.tag {
+            margin-left: 0.5em;
         }
     }
 }

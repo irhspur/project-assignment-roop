@@ -11,6 +11,7 @@ const TeamDataFields: { field: keyof TTeamData; label: string }[] = [
     { field: "goalsAgainst", label: "GA" },
     { field: "goalsDifference", label: "GD" },
     { field: "points", label: "Points" },
+    { field: "last5", label: "Last 5 Games" },
 ];
 
 export const FixtureTable = ({
@@ -63,18 +64,40 @@ export const FixtureTable = ({
         </th>
     );
 
+    const renderTableData = (team: TTeamData, field: keyof TTeamData) => {
+        if (field === "name") {
+            return (
+                <td onClick={() => handleModalOpen(team[field])} key={field}>
+                    {team[field]}
+                </td>
+            );
+        } else if (field === "last5") {
+            return (
+                <td>
+                    <span className="tag is-success">W</span>
+                    <span className="tag is-success">W</span>
+                    <span className="tag is-light">D</span>
+                    <span className="tag is-danger">L</span>
+                    <span className="tag is-success">W</span>
+                </td>
+            );
+        } else {
+            return <td key={field}>{team[field]}</td>;
+        }
+    };
+
     return (
         <table className="table">
             <thead>
                 <tr>
                     {TeamDataFields.map(({ label, field }) => (
-                        <>
+                        <React.Fragment key={label}>
                             {field === "points" ? (
                                 renderSortableHeader(label)
                             ) : (
-                                <th key={label}>{label}</th>
+                                <th>{label}</th>
                             )}
-                        </>
+                        </React.Fragment>
                     ))}
                 </tr>
             </thead>
@@ -83,20 +106,9 @@ export const FixtureTable = ({
                     ? viewData.map((team) => (
                           <tr key={team.name} className={team.class}>
                               {TeamDataFields.map(({ field }) => (
-                                  <>
-                                      {field === "name" ? (
-                                          <td
-                                              onClick={() =>
-                                                  handleModalOpen(team[field])
-                                              }
-                                              key={field}
-                                          >
-                                              {team[field]}
-                                          </td>
-                                      ) : (
-                                          <td key={field}>{team[field]}</td>
-                                      )}
-                                  </>
+                                  <React.Fragment key={field}>
+                                      {renderTableData(team, field)}
+                                  </React.Fragment>
                               ))}
                           </tr>
                       ))
