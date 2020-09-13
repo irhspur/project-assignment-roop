@@ -43,3 +43,10 @@ export type TTeamData = {
     class?: string;
     last5?: TLast5[];
 }
+export type TStats = {
+    win?: number;
+    loss?: number;
+    draw?: number;
+    points?: number;
+    last5?: TLast5[];
+}
